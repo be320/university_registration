@@ -8,19 +8,34 @@ import java.util.Date;
 @Entity
 public abstract class Person {
 
-    private int personId;
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private Date dateOfBirth;
-    private String phone;
-    private String email;
-    private String password;
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "person_id")
+    private int personId;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
+
+
+
     public int getPersonId() {
         return personId;
     }
@@ -29,7 +44,6 @@ public abstract class Person {
         this.personId = personId;
     }
 
-    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -38,7 +52,6 @@ public abstract class Person {
         this.firstName = firstName;
     }
 
-    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -47,7 +60,6 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
-    @Column(name = "gender")
     public String getGender() {
         return gender;
     }
@@ -56,7 +68,6 @@ public abstract class Person {
         this.gender = gender;
     }
 
-    @Column(name = "date_of_birth")
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -65,7 +76,6 @@ public abstract class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
-    @Column(name = "phone")
     public String getPhone() {
         return phone;
     }
@@ -74,7 +84,6 @@ public abstract class Person {
         this.phone = phone;
     }
 
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -83,7 +92,6 @@ public abstract class Person {
         this.email = email;
     }
 
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }

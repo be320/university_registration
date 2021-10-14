@@ -7,16 +7,30 @@ import java.util.List;
 @Entity
 public class Instructor extends Person {
 
-    private int instructorId;
-    private double salary;
-    private int yearsOfExperience;
-    private Person person;
-    private List<Course> courses;
-    private Department department;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "instructor_id")
+    private int instructorId;
+
+    @Column(name = "salary")
+    private double salary;
+
+    @Column(name = "years_of_experience")
+    private int yearsOfExperience;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    private Person person;
+
+    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
+    private List<Course> courses;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+
+
     public int getInstructorId() {
         return instructorId;
     }
@@ -25,7 +39,6 @@ public class Instructor extends Person {
         this.instructorId = instructorId;
     }
 
-    @Column(name = "salary")
     public double getSalary() {
         return salary;
     }
@@ -34,7 +47,6 @@ public class Instructor extends Person {
         this.salary = salary;
     }
 
-    @Column(name = "years_of_experience")
     public int getYearsOfExperience() {
         return yearsOfExperience;
     }
@@ -43,8 +55,6 @@ public class Instructor extends Person {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "person_id")
     public Person getPerson() {
         return person;
     }
@@ -53,7 +63,6 @@ public class Instructor extends Person {
         this.person = person;
     }
 
-    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
     public List<Course> getCourses() {
         return courses;
     }
@@ -62,8 +71,6 @@ public class Instructor extends Person {
         this.courses = courses;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department_id")
     public Department getDepartment() {
         return department;
     }

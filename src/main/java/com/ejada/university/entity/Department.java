@@ -7,15 +7,26 @@ import java.util.List;
 @Entity
 public class Department {
 
-    private int department_id;
-    private String name;
-    private Instructor manager;
-    private List<Course> courses;
-    private List<Instructor> instructors;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "department_id")
+    private int department_id;
+
+    @Column(name = "name")
+    private String name;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "manager_id")
+    private Instructor manager;
+
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    private List<Course> courses;
+
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    private List<Instructor> instructors;
+
+
+
     public int getDepartment_id() {
         return department_id;
     }
@@ -24,7 +35,6 @@ public class Department {
         this.department_id = department_id;
     }
 
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -33,8 +43,6 @@ public class Department {
         this.name = name;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "manager_id")
     public Instructor getManager() {
         return manager;
     }
@@ -43,7 +51,6 @@ public class Department {
         this.manager = manager;
     }
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     public List<Course> getCourses() {
         return courses;
     }
@@ -52,7 +59,6 @@ public class Department {
         this.courses = courses;
     }
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     public List<Instructor> getInstructors() {
         return instructors;
     }

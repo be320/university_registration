@@ -7,14 +7,28 @@ import java.util.List;
 @Entity
 public class Student extends Person{
 
-    private int studentId;
-    private double gpa;
-    private Person person;
-    private List<Course> courses;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "student_id")
+    private int studentId;
+
+    @Column(name = "gpa")
+    private double gpa;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    private Person person;
+
+    @ManyToMany
+    @JoinTable(
+            name = "register",
+            joinColumns = { @JoinColumn(name = "student_id") },
+            inverseJoinColumns = { @JoinColumn(name = "course_id") }
+    )
+    private List<Course> courses;
+
+
+
     public int getStudentId() {
         return studentId;
     }
@@ -23,7 +37,6 @@ public class Student extends Person{
         this.studentId = studentId;
     }
 
-    @Column(name = "gpa")
     public double getGpa() {
         return gpa;
     }
@@ -32,8 +45,6 @@ public class Student extends Person{
         this.gpa = gpa;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "person_id")
     public Person getPerson() {
         return person;
     }
@@ -42,12 +53,6 @@ public class Student extends Person{
         this.person = person;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "register",
-            joinColumns = { @JoinColumn(name = "student_id") },
-            inverseJoinColumns = { @JoinColumn(name = "course_id") }
-    )
     public List<Course> getCourses() {
         return courses;
     }

@@ -7,16 +7,30 @@ import java.util.List;
 @Entity
 public class Course {
 
-    private int courseId;
-    private String name;
-    private int creditHours;
-    private Instructor instructor;
-    private Department department;
-    private List<Student> students;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "course_id")
+    private int courseId;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "credit_hours")
+    private int creditHours;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students;
+
+
+
     public int getCourseId() {
         return courseId;
     }
@@ -25,7 +39,6 @@ public class Course {
         this.courseId = courseId;
     }
 
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -34,7 +47,6 @@ public class Course {
         this.name = name;
     }
 
-    @Column(name = "credit_hours")
     public int getCreditHours() {
         return creditHours;
     }
@@ -43,8 +55,6 @@ public class Course {
         this.creditHours = creditHours;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "instructor_id")
     public Instructor getInstructor() {
         return instructor;
     }
@@ -53,8 +63,6 @@ public class Course {
         this.instructor = instructor;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department_id")
     public Department getDepartment() {
         return department;
     }
@@ -63,7 +71,6 @@ public class Course {
         this.department = department;
     }
 
-    @ManyToMany(mappedBy = "courses")
     public List<Student> getStudents() {
         return students;
     }
