@@ -19,13 +19,8 @@ public class Student extends Person{
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @ManyToMany
-    @JoinTable(
-            name = "register",
-            joinColumns = { @JoinColumn(name = "student_id") },
-            inverseJoinColumns = { @JoinColumn(name = "course_id") }
-    )
-    private List<Course> courses;
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<Registration> registrations;
 
 
 
@@ -53,11 +48,11 @@ public class Student extends Person{
         this.person = person;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Registration> getRegistrations() {
+        return registrations;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
     }
 }

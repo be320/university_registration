@@ -26,8 +26,8 @@ public class Course {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToMany(mappedBy = "courses")
-    private List<Student> students;
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private List<Registration> registrations;
 
 
 
@@ -71,11 +71,11 @@ public class Course {
         this.department = department;
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public List<Registration> getRegistrations() {
+        return registrations;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
     }
 }
