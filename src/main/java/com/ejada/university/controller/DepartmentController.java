@@ -1,0 +1,65 @@
+package com.ejada.university.controller;
+
+import com.ejada.university.entity.Department;
+import com.ejada.university.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
+public class DepartmentController {
+
+    @Autowired
+    private DepartmentService departmentService;
+
+    @GetMapping("/departments")
+    public List<Department> findAll(){
+        return departmentService.findAll();
+    }
+
+    @GetMapping("/departments/{departmentId}")
+    public Department getDepartment(@PathVariable int departmentId){
+        Department department = departmentService.findById(departmentId);
+
+        if(department == null){
+            throw new RuntimeException("Department id not found: "+ departmentId);
+        }
+
+        return department;
+    }
+
+    @PostMapping("/departments")
+    public Department addDepartment(@RequestBody Department department){
+
+        // I set id by zero in case that id is passed to force saving
+        department.setDepartmentId(0);
+        departmentService.save(department);
+
+        return department;
+    }
+
+    @PutMapping("/departments")
+    public Department updateDepartment(@RequestBody Department department){
+
+        departmentService.save(department);
+        return department;
+    }
+
+    @DeleteMapping("/departments/{departmentId}")
+    public String deleteDepartment(@PathVariable int departmentId){
+        Department department = departmentService.findById(departmentId);
+
+        if(department == null){
+            throw new RuntimeException("Department id not found: "+ departmentId);
+        }
+
+        departmentService.deleteById(departmentId);
+
+        return "Deleted department with id : "+departmentId;
+    }
+
+
+
+}

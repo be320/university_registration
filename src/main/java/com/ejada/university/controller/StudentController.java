@@ -40,7 +40,7 @@ public class StudentController {
         return student;
     }
 
-    @PutMapping("/employees")
+    @PutMapping("/students")
     public Student updateStudent(@RequestBody Student student){
 
         studentService.save(student);
