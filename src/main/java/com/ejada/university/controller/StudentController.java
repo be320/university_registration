@@ -1,6 +1,7 @@
 package com.ejada.university.controller;
 
 import com.ejada.university.entity.Student;
+import com.ejada.university.exception.EntityNotFoundException;
 import com.ejada.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,8 @@ public class StudentController {
     public Student getStudent(@PathVariable int studentId){
         Student student = studentService.findById(studentId);
 
-        if(student == null){
-            throw new RuntimeException("Student id not found: "+ studentId);
+        if (student == null) {
+            throw new EntityNotFoundException("Student id not found: " + studentId);
         }
 
         return student;
@@ -51,8 +52,8 @@ public class StudentController {
     public String deleteStudent(@PathVariable int studentId){
         Student student = studentService.findById(studentId);
 
-        if(student == null){
-            throw new RuntimeException("Student id not found: "+ studentId);
+        if (student == null) {
+            throw new EntityNotFoundException("Student id not found: " + studentId);
         }
 
         studentService.deleteById(studentId);

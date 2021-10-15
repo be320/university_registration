@@ -4,6 +4,7 @@ import com.ejada.university.entity.Course;
 import com.ejada.university.entity.Instructor;
 import com.ejada.university.entity.Registration;
 import com.ejada.university.entity.Student;
+import com.ejada.university.exception.EntityNotFoundException;
 import com.ejada.university.service.CourseService;
 import com.ejada.university.service.RegistrationService;
 import com.ejada.university.service.StudentService;
@@ -26,16 +27,16 @@ public class RegistrationController {
     private CourseService courseService;
 
     @GetMapping("/registrations")
-    public List<Registration> findAll(){
+    public List<Registration> findAll() {
         return registrationService.findAll();
     }
 
     @GetMapping("/registrations/{registrationId}")
-    public Registration getRegistration(@PathVariable int registrationId){
+    public Registration getRegistration(@PathVariable int registrationId) {
         Registration registration = registrationService.findById(registrationId);
 
-        if(registration == null){
-            throw new RuntimeException("Registration id not found: "+ registrationId);
+        if (registration == null) {
+            throw new EntityNotFoundException("Registration id not found: " + registrationId);
         }
 
         return registration;
@@ -47,12 +48,18 @@ public class RegistrationController {
     }
 
     @PostMapping("/registrations/students/{studentId}/courses/{courseId}")
-    public Registration addRegistration(@PathVariable int studentId, @PathVariable int courseId, @RequestBody Registration registration){
+    public Registration addRegistration(@PathVariable int studentId, @PathVariable int courseId, @RequestBody Registration registration) {
 
         // I set id by zero in case that id is passed to force saving
         registration.setRegistrationId(0);
         Course course = courseService.findById(courseId);
+        if (course == null) {
+            throw new EntityNotFoundException("Course id not found: " + courseId);
+        }
         Student student = studentService.findById(studentId);
+        if (student == null) {
+            throw new EntityNotFoundException("Student id not found: " + studentId);
+        }
         registration.setStudent(student);
         registration.setCourse(course);
         registrationService.save(registration);
@@ -61,10 +68,16 @@ public class RegistrationController {
     }
 
     @PutMapping("/registrations/students/{studentId}/courses/{courseId}")
-    public Registration updateRegistration(@PathVariable int studentId, @PathVariable int courseId, @RequestBody Registration registration){
+    public Registration updateRegistration(@PathVariable int studentId, @PathVariable int courseId, @RequestBody Registration registration) {
 
         Course course = courseService.findById(courseId);
+        if (course == null) {
+            throw new EntityNotFoundException("Course id not found: " + courseId);
+        }
         Student student = studentService.findById(studentId);
+        if (student == null) {
+            throw new EntityNotFoundException("Student id not found: " + studentId);
+        }
         registration.setStudent(student);
         registration.setCourse(course);
         registrationService.save(registration);
@@ -73,18 +86,17 @@ public class RegistrationController {
     }
 
     @DeleteMapping("/registrations/{registrationId}")
-    public String deleteRegistration(@PathVariable int registrationId){
+    public String deleteRegistration(@PathVariable int registrationId) {
         Registration registration = registrationService.findById(registrationId);
 
-        if(registration == null){
-            throw new RuntimeException("Registration id not found: "+ registrationId);
+        if (registration == null) {
+            throw new EntityNotFoundException("Registration id not found: " + registrationId);
         }
 
         registrationService.deleteById(registrationId);
 
-        return "Deleted registration with id : "+registrationId;
+        return "Deleted registration with id : " + registrationId;
     }
-
 
 
 }

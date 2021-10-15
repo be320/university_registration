@@ -16,33 +16,33 @@ public class CourseDAO {
     @Autowired
     private EntityManager entityManager;
 
-    public List<Course> findAll(){
+    public List<Course> findAll() {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Course> query = currentSession.createQuery("from Course", Course.class);
         List<Course> courses = query.getResultList();
         return courses;
     }
 
-    public Course findById(int id){
+    public Course findById(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Course course = currentSession.get(Course.class, id);
         return course;
     }
 
-    public List<Course> findByDepartmentId(int departmentId){
+    public List<Course> findByDepartmentId(int departmentId) {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Course> query = currentSession.createQuery("select C from Course C JOIN C.department D WHERE D.departmentId = :department_id", Course.class);
-        query.setParameter("department_id",departmentId);
+        query.setParameter("department_id", departmentId);
         List<Course> courses = query.getResultList();
         return courses;
     }
 
-    public void save(Course course){
+    public void save(Course course) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.saveOrUpdate(course);
     }
 
-    public void deleteById(int id){
+    public void deleteById(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Course course = currentSession.get(Course.class, id);
         currentSession.delete(course);

@@ -16,27 +16,27 @@ public class CourseService {
     private CourseDAO courseDAO;
 
     @Transactional
-    public List<Course> findAll(){
+    public List<Course> findAll() {
         return courseDAO.findAll();
     }
 
     @Transactional
-    public Course findById(int id){
+    public Course findById(int id) {
         return courseDAO.findById(id);
     }
 
     @Transactional
-    public List<Course> findByDepartmentId(int id){
+    public List<Course> findByDepartmentId(int id) {
         return courseDAO.findByDepartmentId(id);
     }
 
     @Transactional
-    public void save(Course course){
+    public void save(Course course) {
         courseDAO.save(course);
     }
 
     @Transactional
-    public void deleteById(int id){
+    public void deleteById(int id) {
         courseDAO.deleteById(id);
     }
 }
