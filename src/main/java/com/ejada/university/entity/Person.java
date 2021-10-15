@@ -1,11 +1,14 @@
 package com.ejada.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Table(name = "person")
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 
     @Id
@@ -23,6 +26,7 @@ public abstract class Person {
     private String gender;
 
     @Column(name = "date_of_birth")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date dateOfBirth;
 
     @Column(name = "phone")

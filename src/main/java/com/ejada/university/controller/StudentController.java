@@ -34,7 +34,7 @@ public class StudentController {
     public Student addStudent(@RequestBody Student student){
 
         // I set id by zero in case that id is passed to force saving
-        student.setStudentId(0);
+        student.setPersonId(0);
         studentService.save(student);
 
         return student;

@@ -34,7 +34,7 @@ public class InstructorController {
     public Instructor addInstructor(@RequestBody Instructor instructor){
 
         // I set id by zero in case that id is passed to force saving
-        instructor.setInstructorId(0);
+        instructor.setPersonId(0);
         instructorService.save(instructor);
 
         return instructor;

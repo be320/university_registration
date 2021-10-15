@@ -5,12 +5,8 @@ import java.util.List;
 
 @Table(name = "instructor")
 @Entity
+@PrimaryKeyJoinColumn(name = "instructor_id")
 public class Instructor extends Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "instructor_id")
-    private int instructorId;
 
     @Column(name = "salary")
     private double salary;
@@ -18,9 +14,6 @@ public class Instructor extends Person {
     @Column(name = "years_of_experience")
     private int yearsOfExperience;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "person_id")
-    private Person person;
 
     @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
     private List<Course> courses;
@@ -29,15 +22,6 @@ public class Instructor extends Person {
     @JoinColumn(name = "department_id")
     private Department department;
 
-
-
-    public int getInstructorId() {
-        return instructorId;
-    }
-
-    public void setInstructorId(int instructorId) {
-        this.instructorId = instructorId;
-    }
 
     public double getSalary() {
         return salary;
@@ -53,14 +37,6 @@ public class Instructor extends Person {
 
     public void setYearsOfExperience(int yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public List<Course> getCourses() {
