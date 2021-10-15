@@ -1,5 +1,7 @@
 package com.ejada.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class Instructor extends Person {
 
 
     @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Course> courses;
 
     @ManyToOne(fetch = FetchType.EAGER)

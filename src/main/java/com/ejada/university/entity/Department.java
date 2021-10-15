@@ -1,5 +1,7 @@
 package com.ejada.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,9 +22,11 @@ public class Department {
     private Instructor manager;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Course> courses;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Instructor> instructors;
 
 

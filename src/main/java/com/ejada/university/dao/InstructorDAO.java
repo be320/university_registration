@@ -28,6 +28,14 @@ public class InstructorDAO {
         return instructor;
     }
 
+    public List<Instructor> findByDepartmentId(int departmentId){
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Instructor> query = currentSession.createQuery("from Instructor I WHERE I.departmentId = :department_id", Instructor.class);
+        query.setParameter("department_id",departmentId);
+        List<Instructor> instructors = query.getResultList();
+        return instructors;
+    }
+
     public void save(Instructor instructor){
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.saveOrUpdate(instructor);

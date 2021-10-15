@@ -1,5 +1,7 @@
 package com.ejada.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Student extends Person{
 
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Registration> registrations;
 
 

@@ -94,3 +94,18 @@ CREATE TABLE `university`.`register` (
     REFERENCES `university`.`course` (`course_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+
+
+ALTER TABLE `university`.`department`
+DROP FOREIGN KEY `department_manager_fk`;
+ALTER TABLE `university`.`department`
+CHANGE COLUMN `manager_id` `manager_id` INT NULL ;
+ALTER TABLE `university`.`department`
+ADD CONSTRAINT `department_manager_fk`
+  FOREIGN KEY (`manager_id`)
+  REFERENCES `university`.`instructor` (`instructor_id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `university`.`register`
+CHANGE COLUMN `marks` `marks` DOUBLE NULL ;

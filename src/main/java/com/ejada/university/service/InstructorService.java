@@ -20,6 +20,11 @@ public class InstructorService {
     }
 
     @Transactional
+    public List<Instructor> findByDepartmentId(int id){
+        return instructorDAO.findByDepartmentId(id);
+    }
+
+    @Transactional
     public Instructor findById(int id){
         return instructorDAO.findById(id);
     }
@@ -33,4 +38,6 @@ public class InstructorService {
     public void deleteById(int id){
         instructorDAO.deleteById(id);
     }
+
+
 }

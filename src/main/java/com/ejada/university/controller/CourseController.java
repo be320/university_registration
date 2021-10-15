@@ -1,7 +1,11 @@
 package com.ejada.university.controller;
 
 import com.ejada.university.entity.Course;
+import com.ejada.university.entity.Department;
+import com.ejada.university.entity.Instructor;
 import com.ejada.university.service.CourseService;
+import com.ejada.university.service.DepartmentService;
+import com.ejada.university.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +17,12 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private InstructorService instructorService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @GetMapping("/courses")
     public List<Course> findAll(){
@@ -30,11 +40,13 @@ public class CourseController {
         return course;
     }
 
-    @PostMapping("/courses")
-    public Course addCourse(@RequestBody Course course){
+    @PostMapping("courses/departments/{departmentId}/instructors/{instructorId}")
+    public Course addCourse(@PathVariable int departmentId, @PathVariable int instructorId,@RequestBody Course course){
 
         // I set id by zero in case that id is passed to force saving
         course.setCourseId(0);
+        Department department = departmentService.findById(departmentId);
+        Instructor instructor = instructorService.findById(instructorId);
         courseService.save(course);
 
         return course;
