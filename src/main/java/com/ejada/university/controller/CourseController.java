@@ -25,11 +25,20 @@ public class CourseController {
     @Autowired
     private DepartmentService departmentService;
 
+    /**
+     * get all the university courses
+     * @return courses
+     */
     @GetMapping("/courses")
     public List<Course> findAll() {
         return courseService.findAll();
     }
 
+    /**
+     * get a course by passing courseId
+     * @param courseId
+     * @return course
+     */
     @GetMapping("/courses/{courseId}")
     public Course getCourse(@PathVariable int courseId) {
         Course course = courseService.findById(courseId);
@@ -41,11 +50,24 @@ public class CourseController {
         return course;
     }
 
+
+    /**
+     * get all courses of a department by passing the department id
+     * @param departmentId
+     * @return courses
+     */
     @GetMapping("/courses/departments/{departmentId}")
     public List<Course> getAllCoursesByDepartmentId(@PathVariable int departmentId) {
         return courseService.findByDepartmentId(departmentId);
     }
 
+    /**
+     * add new course and passing its department id ad the instructor id
+     * @param departmentId
+     * @param instructorId
+     * @param course
+     * @return course
+     */
     @PostMapping("/courses/departments/{departmentId}/instructors/{instructorId}")
     public Course addCourse(@PathVariable int departmentId, @PathVariable int instructorId, @RequestBody Course course) {
 
@@ -69,6 +91,14 @@ public class CourseController {
         return course;
     }
 
+
+    /**
+     * update existing course
+     * @param departmentId
+     * @param instructorId
+     * @param course
+     * @return course
+     */
     @PutMapping("/courses/departments/{departmentId}/instructors/{instructorId}")
     public Course updateCourse(@PathVariable int departmentId, @PathVariable int instructorId, @RequestBody Course course) {
 
@@ -90,6 +120,11 @@ public class CourseController {
     }
 
 
+    /**
+     * delete a course
+     * @param courseId
+     * @return deleting message
+     */
     @DeleteMapping("/courses/{courseId}")
     public String deleteCourse(@PathVariable int courseId) {
 

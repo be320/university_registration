@@ -15,11 +15,20 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    /**
+     * get all the students in the university
+     * @return students
+     */
     @GetMapping("/students")
     public List<Student> findAll(){
         return studentService.findAll();
     }
 
+    /**
+     * get a specific student by passing his id
+     * @param studentId
+     * @return student
+     */
     @GetMapping("/students/{studentId}")
     public Student getStudent(@PathVariable int studentId){
         Student student = studentService.findById(studentId);
@@ -31,6 +40,11 @@ public class StudentController {
         return student;
     }
 
+    /**
+     * add new student
+     * @param student
+     * @return student
+     */
     @PostMapping("/students")
     public Student addStudent(@RequestBody Student student){
 
@@ -41,6 +55,11 @@ public class StudentController {
         return student;
     }
 
+    /**
+     * update student information
+     * @param student
+     * @return student
+     */
     @PutMapping("/students")
     public Student updateStudent(@RequestBody Student student){
 
@@ -48,6 +67,11 @@ public class StudentController {
         return student;
     }
 
+    /**
+     * delete a student by passing his id
+     * @param studentId
+     * @return
+     */
     @DeleteMapping("/students/{studentId}")
     public String deleteStudent(@PathVariable int studentId){
         Student student = studentService.findById(studentId);

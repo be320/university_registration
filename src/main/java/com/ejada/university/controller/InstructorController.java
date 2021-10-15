@@ -20,11 +20,20 @@ public class InstructorController {
     @Autowired
     private DepartmentService departmentService;
 
+    /**
+     * get all instructors
+     * @return instructors
+     */
     @GetMapping("/instructors")
     public List<Instructor> findAll() {
         return instructorService.findAll();
     }
 
+    /**
+     * get instructor by passing its id
+     * @param instructorId
+     * @return instructor
+     */
     @GetMapping("/instructors/{instructorId}")
     public Instructor getInstructor(@PathVariable int instructorId) {
         Instructor instructor = instructorService.findById(instructorId);
@@ -36,12 +45,24 @@ public class InstructorController {
         return instructor;
     }
 
+
+    /**
+     * get all the instructors teaching in a department by passing department id
+     * @param departmentId
+     * @return instructors
+     */
     @GetMapping("/instructors/departments/{departmentId}")
     public List<Instructor> getAllInstructorsByDepartmentId(@PathVariable int departmentId) {
         return instructorService.findByDepartmentId(departmentId);
     }
 
 
+    /**
+     * add new instructor and assign him to a department
+     * @param departmentId
+     * @param instructor
+     * @return instructor
+     */
     @PostMapping("/instructors/departments/{departmentId}")
     public Instructor addInstructor(@PathVariable int departmentId, @RequestBody Instructor instructor) {
 
@@ -56,6 +77,12 @@ public class InstructorController {
         return instructor;
     }
 
+    /**
+     * update existing instructor data
+     * @param departmentId
+     * @param instructor
+     * @return instructor
+     */
     @PutMapping("/instructors/departments/{departmentId}")
     public Instructor updateInstructor(@PathVariable int departmentId, @RequestBody Instructor instructor) {
 
@@ -68,6 +95,11 @@ public class InstructorController {
         return instructor;
     }
 
+    /**
+     * delete instructor by passing its id
+     * @param instructorId
+     * @return deleting message
+     */
     @DeleteMapping("/instructors/{instructorId}")
     public String deleteInstructor(@PathVariable int instructorId) {
         Instructor instructor = instructorService.findById(instructorId);

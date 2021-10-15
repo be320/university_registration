@@ -20,11 +20,20 @@ public class DepartmentController {
     @Autowired
     private InstructorService instructorService;
 
+    /**
+     * get all the departments in the university
+     * @return departments
+     */
     @GetMapping("/departments")
     public List<Department> findAll() {
         return departmentService.findAll();
     }
 
+    /**
+     * get a department by passing department id
+     * @param departmentId
+     * @return department
+     */
     @GetMapping("/departments/{departmentId}")
     public Department getDepartment(@PathVariable int departmentId) {
         Department department = departmentService.findById(departmentId);
@@ -36,6 +45,11 @@ public class DepartmentController {
         return department;
     }
 
+    /**
+     * add new department
+     * @param department
+     * @return department
+     */
     @PostMapping("/departments")
     public Department addDepartment(@RequestBody Department department) {
 
@@ -46,6 +60,11 @@ public class DepartmentController {
         return department;
     }
 
+    /**
+     * update existing department data
+     * @param department
+     * @return department
+     */
     @PutMapping("/departments")
     public Department updateDepartment(@RequestBody Department department) {
 
@@ -53,6 +72,12 @@ public class DepartmentController {
         return department;
     }
 
+    /**
+     * assign manager to existing department
+     * @param instructorId
+     * @param department
+     * @return department
+     */
     @PutMapping("/departments/instructors/{instructorId}")
     public Department addManager(@PathVariable int instructorId, @RequestBody Department department) {
 
@@ -65,6 +90,11 @@ public class DepartmentController {
         return department;
     }
 
+    /**
+     * delete department by passing its id
+     * @param departmentId
+     * @return
+     */
     @DeleteMapping("/departments/{departmentId}")
     public String deleteDepartment(@PathVariable int departmentId) {
         Department department = departmentService.findById(departmentId);
