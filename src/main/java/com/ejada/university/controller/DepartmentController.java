@@ -1,7 +1,9 @@
 package com.ejada.university.controller;
 
 import com.ejada.university.entity.Department;
+import com.ejada.university.entity.Instructor;
 import com.ejada.university.service.DepartmentService;
+import com.ejada.university.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private InstructorService instructorService;
 
     @GetMapping("/departments")
     public List<Department> findAll(){
@@ -44,6 +49,15 @@ public class DepartmentController {
     public Department updateDepartment(@RequestBody Department department){
 
         departmentService.save(department);
+        return department;
+    }
+
+    @PutMapping("/departments/instructors/{instructorId}")
+    public Department addManager(@PathVariable int instructorId, @RequestBody Department department){
+
+        Instructor manager = instructorService.findById(instructorId);
+        department.setManager(manager);
+        departmentService.addManager(department);
         return department;
     }
 

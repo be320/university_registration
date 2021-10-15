@@ -1,6 +1,7 @@
 package com.ejada.university.dao;
 
 import com.ejada.university.entity.Course;
+import com.ejada.university.entity.Instructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,14 @@ public class CourseDAO {
         Session currentSession = entityManager.unwrap(Session.class);
         Course course = currentSession.get(Course.class, id);
         return course;
+    }
+
+    public List<Course> findByDepartmentId(int departmentId){
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Course> query = currentSession.createQuery("select C from Course C JOIN C.department D WHERE D.departmentId = :department_id", Course.class);
+        query.setParameter("department_id",departmentId);
+        List<Course> courses = query.getResultList();
+        return courses;
     }
 
     public void save(Course course){

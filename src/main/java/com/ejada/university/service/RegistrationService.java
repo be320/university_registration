@@ -1,6 +1,7 @@
 package com.ejada.university.service;
 
 import com.ejada.university.dao.RegistrationDAO;
+import com.ejada.university.entity.Instructor;
 import com.ejada.university.entity.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class RegistrationService {
     @Transactional
     public Registration findById(int id){
         return registrationDAO.findById(id);
+    }
+
+    @Transactional
+    public List<Registration> findByStudentId(int id){
+        return registrationDAO.findByStudentId(id);
     }
 
     @Transactional

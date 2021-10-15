@@ -33,6 +33,11 @@ public class DepartmentDAO {
         currentSession.saveOrUpdate(department);
     }
 
+    public void addManager(Department department){
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.merge(department);
+    }
+
     public void deleteById(int id){
         Session currentSession = entityManager.unwrap(Session.class);
         Department department = currentSession.get(Department.class, id);

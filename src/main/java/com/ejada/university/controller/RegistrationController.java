@@ -1,7 +1,12 @@
 package com.ejada.university.controller;
 
+import com.ejada.university.entity.Course;
+import com.ejada.university.entity.Instructor;
 import com.ejada.university.entity.Registration;
+import com.ejada.university.entity.Student;
+import com.ejada.university.service.CourseService;
 import com.ejada.university.service.RegistrationService;
+import com.ejada.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +18,12 @@ public class RegistrationController {
 
     @Autowired
     private RegistrationService registrationService;
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping("/registrations")
     public List<Registration> findAll(){
@@ -30,20 +41,34 @@ public class RegistrationController {
         return registration;
     }
 
-    @PostMapping("/registrations")
-    public Registration addRegistration(@RequestBody Registration registration){
+    @GetMapping("/registrations/students/{studentId}")
+    public List<Registration> getAllRegistrationByStudentId(@PathVariable int studentId) {
+        return registrationService.findByStudentId(studentId);
+    }
+
+    @PostMapping("/registrations/students/{studentId}/courses/{courseId}")
+    public Registration addRegistration(@PathVariable int studentId, @PathVariable int courseId, @RequestBody Registration registration){
 
         // I set id by zero in case that id is passed to force saving
         registration.setRegistrationId(0);
+        Course course = courseService.findById(courseId);
+        Student student = studentService.findById(studentId);
+        registration.setStudent(student);
+        registration.setCourse(course);
         registrationService.save(registration);
 
         return registration;
     }
 
-    @PutMapping("/registrations")
-    public Registration updateRegistration(@RequestBody Registration registration){
+    @PutMapping("/registrations/students/{studentId}/courses/{courseId}")
+    public Registration updateRegistration(@PathVariable int studentId, @PathVariable int courseId, @RequestBody Registration registration){
 
+        Course course = courseService.findById(courseId);
+        Student student = studentService.findById(studentId);
+        registration.setStudent(student);
+        registration.setCourse(course);
         registrationService.save(registration);
+
         return registration;
     }
 

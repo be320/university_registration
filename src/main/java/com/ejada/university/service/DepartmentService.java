@@ -30,6 +30,11 @@ public class DepartmentService {
     }
 
     @Transactional
+    public void addManager(Department department){
+        departmentDAO.addManager(department);
+    }
+
+    @Transactional
     public void deleteById(int id){
         departmentDAO.deleteById(id);
     }

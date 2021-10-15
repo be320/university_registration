@@ -40,24 +40,37 @@ public class CourseController {
         return course;
     }
 
-    @PostMapping("courses/departments/{departmentId}/instructors/{instructorId}")
+    @GetMapping("/courses/departments/{departmentId}")
+    public List<Course> getAllCoursesByDepartmentId(@PathVariable int departmentId){
+        return courseService.findByDepartmentId(departmentId);
+    }
+
+    @PostMapping("/courses/departments/{departmentId}/instructors/{instructorId}")
     public Course addCourse(@PathVariable int departmentId, @PathVariable int instructorId,@RequestBody Course course){
 
         // I set id by zero in case that id is passed to force saving
         course.setCourseId(0);
         Department department = departmentService.findById(departmentId);
         Instructor instructor = instructorService.findById(instructorId);
+        course.setDepartment(department);
+        course.setInstructor(instructor);
         courseService.save(course);
 
         return course;
     }
 
-    @PutMapping("/courses")
-    public Course updateCourse(@RequestBody Course course){
+    @PutMapping("/courses/departments/{departmentId}/instructors/{instructorId}")
+    public Course updateCourse(@PathVariable int departmentId, @PathVariable int instructorId,@RequestBody Course course){
 
+        Department department = departmentService.findById(departmentId);
+        Instructor instructor = instructorService.findById(instructorId);
+        course.setDepartment(department);
+        course.setInstructor(instructor);
         courseService.save(course);
+
         return course;
     }
+
 
     @DeleteMapping("/courses/{courseId}")
     public String deleteCourse(@PathVariable int courseId){

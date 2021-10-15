@@ -1,5 +1,6 @@
 package com.ejada.university.dao;
 
+import com.ejada.university.entity.Instructor;
 import com.ejada.university.entity.Registration;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -26,6 +27,14 @@ public class RegistrationDAO {
         Session currentSession = entityManager.unwrap(Session.class);
         Registration registration = currentSession.get(Registration.class, id);
         return registration;
+    }
+
+    public List<Registration> findByStudentId(int studentId){
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Registration> query = currentSession.createQuery("select R from Registration R JOIN R.student S WHERE S.personId = :student_id", Registration.class);
+        query.setParameter("student_id",studentId);
+        List<Registration> registrations = query.getResultList();
+        return registrations;
     }
 
     public void save(Registration registration){

@@ -2,6 +2,7 @@ package com.ejada.university.service;
 
 import com.ejada.university.dao.CourseDAO;
 import com.ejada.university.entity.Course;
+import com.ejada.university.entity.Instructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,11 @@ public class CourseService {
     @Transactional
     public Course findById(int id){
         return courseDAO.findById(id);
+    }
+
+    @Transactional
+    public List<Course> findByDepartmentId(int id){
+        return courseDAO.findByDepartmentId(id);
     }
 
     @Transactional

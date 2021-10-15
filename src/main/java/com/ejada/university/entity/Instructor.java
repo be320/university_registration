@@ -23,6 +23,7 @@ public class Instructor extends Person {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
+    @JsonIgnore
     private Department department;
 
 
