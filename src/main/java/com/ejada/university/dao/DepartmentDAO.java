@@ -1,6 +1,7 @@
 package com.ejada.university.dao;
 
 import com.ejada.university.entity.Department;
+import com.ejada.university.entity.Instructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,16 @@ public class DepartmentDAO {
     public void addManager(Department department){
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.merge(department);
+    }
+
+    public boolean checkIfManagerIsUnique(int managerId){
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Department> query = currentSession.createQuery("SELECT D from Department D JOIN D.manager M WHERE M.personId = :manager_id", Department.class);
+        query.setParameter("manager_id", managerId);
+        List<Department> departments = query.getResultList();
+        if (departments.size() > 0)
+            return false;
+        return true;
     }
 
     public void deleteById(int id){

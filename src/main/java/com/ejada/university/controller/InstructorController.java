@@ -2,7 +2,7 @@ package com.ejada.university.controller;
 
 import com.ejada.university.entity.Department;
 import com.ejada.university.entity.Instructor;
-import com.ejada.university.exception.EntityNotFoundException;
+import com.ejada.university.exception.NotFoundException;
 import com.ejada.university.service.DepartmentService;
 import com.ejada.university.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class InstructorController {
         Instructor instructor = instructorService.findById(instructorId);
 
         if (instructor == null) {
-            throw new EntityNotFoundException("Instructor id not found: " + instructorId);
+            throw new NotFoundException("Instructor id not found: " + instructorId);
         }
 
         return instructor;
@@ -70,7 +70,7 @@ public class InstructorController {
         instructor.setPersonId(0);
         Department department = departmentService.findById(departmentId);
         if (department == null) {
-            throw new EntityNotFoundException("Department id not found: " + departmentId);
+            throw new NotFoundException("Department id not found: " + departmentId);
         }
         instructor.setDepartment(department);
         instructorService.save(instructor);
@@ -88,7 +88,7 @@ public class InstructorController {
 
         Department department = departmentService.findById(departmentId);
         if (department == null) {
-            throw new EntityNotFoundException("Department id not found: " + departmentId);
+            throw new NotFoundException("Department id not found: " + departmentId);
         }
         instructor.setDepartment(department);
         instructorService.save(instructor);
@@ -105,7 +105,7 @@ public class InstructorController {
         Instructor instructor = instructorService.findById(instructorId);
 
         if (instructor == null) {
-            throw new EntityNotFoundException("Instructor id not found: " + instructorId);
+            throw new NotFoundException("Instructor id not found: " + instructorId);
         }
 
         instructorService.deleteById(instructorId);

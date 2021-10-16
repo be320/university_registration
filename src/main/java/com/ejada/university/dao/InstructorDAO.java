@@ -1,5 +1,6 @@
 package com.ejada.university.dao;
 
+import com.ejada.university.entity.Course;
 import com.ejada.university.entity.Instructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -34,6 +35,16 @@ public class InstructorDAO {
         query.setParameter("department_id",departmentId);
         List<Instructor> instructors = query.getResultList();
         return instructors;
+    }
+
+    public boolean isInstructorInDepartment(int instructorId, int departmentId){
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Instructor> query = currentSession.createQuery("select I from Instructor I JOIN I.department D WHERE D.departmentId = :department_id AND I.personId = :instructor_id", Instructor.class);
+        query.setParameter("department_id", departmentId);
+        query.setParameter("instructor_id", instructorId);
+        if(query.getResultList().size() > 0)
+            return true;
+        return false;
     }
 
     public void save(Instructor instructor){

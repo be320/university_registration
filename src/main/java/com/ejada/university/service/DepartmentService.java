@@ -25,6 +25,11 @@ public class DepartmentService {
     }
 
     @Transactional
+    public boolean checkIfManagerIsUnique(int id){
+        return departmentDAO.checkIfManagerIsUnique(id);
+    }
+
+    @Transactional
     public void save(Department department){
         departmentDAO.save(department);
     }

@@ -42,6 +42,8 @@ public class CourseDAO {
         currentSession.saveOrUpdate(course);
     }
 
+
+
     public void deleteById(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Course course = currentSession.get(Course.class, id);

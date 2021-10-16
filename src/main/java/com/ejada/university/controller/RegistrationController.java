@@ -1,10 +1,9 @@
 package com.ejada.university.controller;
 
 import com.ejada.university.entity.Course;
-import com.ejada.university.entity.Instructor;
 import com.ejada.university.entity.Registration;
 import com.ejada.university.entity.Student;
-import com.ejada.university.exception.EntityNotFoundException;
+import com.ejada.university.exception.NotFoundException;
 import com.ejada.university.service.CourseService;
 import com.ejada.university.service.RegistrationService;
 import com.ejada.university.service.StudentService;
@@ -45,7 +44,7 @@ public class RegistrationController {
         Registration registration = registrationService.findById(registrationId);
 
         if (registration == null) {
-            throw new EntityNotFoundException("Registration id not found: " + registrationId);
+            throw new NotFoundException("Registration id not found: " + registrationId);
         }
 
         return registration;
@@ -76,11 +75,11 @@ public class RegistrationController {
         registration.setRegistrationId(0);
         Course course = courseService.findById(courseId);
         if (course == null) {
-            throw new EntityNotFoundException("Course id not found: " + courseId);
+            throw new NotFoundException("Course id not found: " + courseId);
         }
         Student student = studentService.findById(studentId);
         if (student == null) {
-            throw new EntityNotFoundException("Student id not found: " + studentId);
+            throw new NotFoundException("Student id not found: " + studentId);
         }
         registration.setStudent(student);
         registration.setCourse(course);
@@ -101,11 +100,11 @@ public class RegistrationController {
 
         Course course = courseService.findById(courseId);
         if (course == null) {
-            throw new EntityNotFoundException("Course id not found: " + courseId);
+            throw new NotFoundException("Course id not found: " + courseId);
         }
         Student student = studentService.findById(studentId);
         if (student == null) {
-            throw new EntityNotFoundException("Student id not found: " + studentId);
+            throw new NotFoundException("Student id not found: " + studentId);
         }
         registration.setStudent(student);
         registration.setCourse(course);
@@ -124,7 +123,7 @@ public class RegistrationController {
         Registration registration = registrationService.findById(registrationId);
 
         if (registration == null) {
-            throw new EntityNotFoundException("Registration id not found: " + registrationId);
+            throw new NotFoundException("Registration id not found: " + registrationId);
         }
 
         registrationService.deleteById(registrationId);

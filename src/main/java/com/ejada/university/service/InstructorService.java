@@ -30,6 +30,11 @@ public class InstructorService {
     }
 
     @Transactional
+    public boolean isInstructorInDepartment(int instructorId, int departmentId){
+        return instructorDAO.isInstructorInDepartment(instructorId, departmentId);
+    }
+
+    @Transactional
     public void save(Instructor instructor){
         instructorDAO.save(instructor);
     }

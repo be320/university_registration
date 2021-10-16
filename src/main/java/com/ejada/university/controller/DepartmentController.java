@@ -2,7 +2,8 @@ package com.ejada.university.controller;
 
 import com.ejada.university.entity.Department;
 import com.ejada.university.entity.Instructor;
-import com.ejada.university.exception.EntityNotFoundException;
+import com.ejada.university.exception.NotFoundException;
+import com.ejada.university.exception.ConflictException;
 import com.ejada.university.service.DepartmentService;
 import com.ejada.university.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class DepartmentController {
         Department department = departmentService.findById(departmentId);
 
         if (department == null) {
-            throw new EntityNotFoundException("Department id not found: " + departmentId);
+            throw new NotFoundException("Department id not found: " + departmentId);
         }
 
         return department;
@@ -83,8 +84,14 @@ public class DepartmentController {
 
         Instructor manager = instructorService.findById(instructorId);
         if (manager == null) {
-            throw new EntityNotFoundException("Instructor id not found: " + instructorId);
+            throw new NotFoundException("Instructor id not found: " + instructorId);
         }
+
+        boolean managerIsUnique = departmentService.checkIfManagerIsUnique(manager.getPersonId());
+        if(!managerIsUnique){
+            throw new ConflictException("this instructor with id "+  + instructorId +" is a manager for other department.");
+        }
+
         department.setManager(manager);
         departmentService.addManager(department);
         return department;
@@ -100,7 +107,7 @@ public class DepartmentController {
         Department department = departmentService.findById(departmentId);
 
         if (department == null) {
-            throw new EntityNotFoundException("Department id not found: " + departmentId);
+            throw new NotFoundException("Department id not found: " + departmentId);
         }
         departmentService.deleteById(departmentId);
 

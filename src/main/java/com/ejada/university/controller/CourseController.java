@@ -3,7 +3,8 @@ package com.ejada.university.controller;
 import com.ejada.university.entity.Course;
 import com.ejada.university.entity.Department;
 import com.ejada.university.entity.Instructor;
-import com.ejada.university.exception.EntityNotFoundException;
+import com.ejada.university.exception.ConflictException;
+import com.ejada.university.exception.NotFoundException;
 import com.ejada.university.service.CourseService;
 import com.ejada.university.service.DepartmentService;
 import com.ejada.university.service.InstructorService;
@@ -44,7 +45,7 @@ public class CourseController {
         Course course = courseService.findById(courseId);
 
         if (course == null) {
-            throw new EntityNotFoundException("Course id not found: " + courseId);
+            throw new NotFoundException("Course id not found: " + courseId);
         }
 
         return course;
@@ -76,12 +77,17 @@ public class CourseController {
 
         Department department = departmentService.findById(departmentId);
         if (department == null) {
-            throw new EntityNotFoundException("Department id not found: " + departmentId);
+            throw new NotFoundException("Department id not found: " + departmentId);
         }
 
         Instructor instructor = instructorService.findById(instructorId);
         if (instructor == null) {
-            throw new EntityNotFoundException("Instructor id not found: " + instructorId);
+            throw new NotFoundException("Instructor id not found: " + instructorId);
+        }
+
+        boolean isInstructorInDepartment = instructorService.isInstructorInDepartment(instructorId, departmentId);
+        if(!isInstructorInDepartment){
+            throw new ConflictException("This instructor "+instructorId+" is not working in that department " +departmentId);
         }
 
         course.setDepartment(department);
@@ -104,12 +110,12 @@ public class CourseController {
 
         Department department = departmentService.findById(departmentId);
         if (department == null) {
-            throw new EntityNotFoundException("Department id not found: " + departmentId);
+            throw new NotFoundException("Department id not found: " + departmentId);
         }
 
         Instructor instructor = instructorService.findById(instructorId);
         if (instructor == null) {
-            throw new EntityNotFoundException("Instructor id not found: " + instructorId);
+            throw new NotFoundException("Instructor id not found: " + instructorId);
         }
 
         course.setDepartment(department);
@@ -131,7 +137,7 @@ public class CourseController {
         Course course = courseService.findById(courseId);
 
         if (course == null) {
-            throw new EntityNotFoundException("Course id not found: " + courseId);
+            throw new NotFoundException("Course id not found: " + courseId);
         }
 
         courseService.deleteById(courseId);
