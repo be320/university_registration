@@ -18,6 +18,9 @@ spec:
           image: mysql:latest
           ports:
             - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "root"
 
   replicas: 1
   selector:
