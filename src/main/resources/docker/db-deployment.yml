@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  labels:
+    app: myapp
+    type: database
+spec:
+  template:
+    metadata:
+      name: db-pod
+      labels:
+        app: myapp
+        type: mysql-db
+    spec:
+      containers:
+        - name: mysqldb
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+      type: mysql-db

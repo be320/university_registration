@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: university-api
+  labels:
+    app: myapp
+spec:
+  template:
+    metadata:
+      name: university-api-pod
+      labels:
+        app: myapp
+        type: rest-api
+    spec:
+      containers:
+        - name: backend-api
+          image: 0673/university:latest
+          ports:
+            - containerPort: 8080
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+      type: rest-api
