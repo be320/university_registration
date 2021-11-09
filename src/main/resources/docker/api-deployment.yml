@@ -14,9 +14,12 @@ spec:
     spec:
       containers:
         - name: backend-api
-          image: 0673/uni-image:5.0
+          image: 0673/uni-api:2.0
           ports:
             - containerPort: 8080
+          env:
+            - name: DBURL
+              value: jdbc:mysql://mysql-service:80/university?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 
   replicas: 1
   selector:
