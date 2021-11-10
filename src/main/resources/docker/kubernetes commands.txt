@@ -1,0 +1,38 @@
+1)build jar file
+mvn clean package
+
+2)build new image
+docker build --build-arg JAR_FILE=target/*.jar -t 0673/uni-api:2.0 .
+
+3)push to repo
+docker image push 0673/uni-api:1.0
+
+4)create DB service
+kubectl create -f E:\Projects\university_registration\src\main\resources\docker\db-service.yml
+
+5)create DB deployment
+kubectl create -f E:\Projects\university_registration\src\main\resources\docker\db-deployment.yml
+
+6)create API deployment
+kubectl create -f E:\Projects\university_registration\src\main\resources\docker\api-deployment.yml
+
+7)check that everything is running
+kubectl get all
+
+8)trace problems of pod
+kubectl logs university-api-549fd95d9b-rkgfs
+
+9)delete deployment & service
+kubectl delete deployment university-api
+
+
+
+
+kubectl port-forward deployments/university-api
+
+
+
+
+
+
+
